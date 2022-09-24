@@ -1,0 +1,459 @@
+function MainFunction($http, $timeout){
+			var vm = this;
+
+			
+			vm.AuthType="Login",vm.Authenticating=!1,vm.AuthWarning="",vm.ResetSuccess="",vm.Login=function(){vm.Authenticating=!0,vm.AuthWarning="",vm.ResetSuccess="",$http({method:"POST",url:"/auth/login.php",data:{EmailAddress:vm.AuthEmail,Password:vm.AuthPassword}}).then(function(t){t.data.success?location.reload():"old_db"==t.data.val?(vm.AuthType="Register",vm.AuthWarning="We just transfered our database. Please register again with this Email Address and all of your subscription will transfer automatically."):vm.AuthWarning=t.data.val,vm.Authenticating=!1},function(t){vm.AuthWarning="Network Error. Please try again later.",vm.Authenticating=!1})},vm.Register=function(){vm.Authenticating=!0,vm.AuthWarning="",vm.ResetSuccess="",grecaptcha.execute("6Ld2-aMZAAAAAD9ESUQP8ijtHxtoWAwv2DOsJJ0n",{action:"homepage"}).then(function(t){vm.Captcha=t,$http({method:"POST",url:"/auth/register.php",data:{EmailAddress:vm.AuthEmail,Username:vm.AuthUsername,Password:vm.AuthPassword,Captcha:vm.Captcha}}).then(function(t){t.data.success?location.reload():vm.AuthWarning=t.data.val,vm.Authenticating=!1},function(t){vm.AuthWarning="Network Error. Please try again later.",vm.Authenticating=!1})})},vm.ResetPassword=function(){vm.Authenticating=!0,vm.AuthWarning="",vm.ResetSuccess="",$http({method:"POST",url:"/auth/reset.php",data:{EmailAddress:vm.AuthEmail}}).then(function(t){t.data.success?(vm.AuthEmail="",vm.AuthUsername="",vm.AuthPassword="",vm.ResetSuccess="If the email address exists, we will send a link to reset your password in a few seconds. If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."):vm.AuthWarning=t.data.val,vm.Authenticating=!1},function(t){vm.AuthWarning="Network Error. Please try again later.",vm.Authenticating=!1})},vm.AuthToggle=function(){"Login"==vm.AuthType?vm.Login():"Register"==vm.AuthType?vm.Register():"Reset"==vm.AuthType&&vm.ResetPassword()};
+
+			vm.CurPage = 1;
+			vm.CurChapter = {"Chapter":"101890","Type":"Chapter","Page":"20","Directory":"","Date":"2022-09-24 00:06:52","ChapterName":null};
+			vm.CurPathName = "scans-ongoing-1.lastation.us";
+			vm.CHAPTERS = [{"Chapter":"100010","Type":"Chapter","Page":"75","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100020","Type":"Chapter","Page":"73","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100030","Type":"Chapter","Page":"24","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100040","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100050","Type":"Chapter","Page":"22","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100060","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100070","Type":"Chapter","Page":"19","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100080","Type":"Chapter","Page":"19","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100090","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100100","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100110","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100120","Type":"Chapter","Page":"19","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100130","Type":"Chapter","Page":"26","Directory":"","Date":"2021-05-03 23:53:48","ChapterName":null},{"Chapter":"100140","Type":"Chapter","Page":"24","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100150","Type":"Chapter","Page":"18","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100160","Type":"Chapter","Page":"18","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100170","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100180","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100190","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100200","Type":"Chapter","Page":"19","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100210","Type":"Chapter","Page":"18","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100220","Type":"Chapter","Page":"25","Directory":"","Date":"2021-05-24 17:17:55","ChapterName":null},{"Chapter":"100230","Type":"Chapter","Page":"23","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100240","Type":"Chapter","Page":"20","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100250","Type":"Chapter","Page":"20","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100260","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100270","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100280","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100290","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100300","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100310","Type":"Chapter","Page":"24","Directory":"","Date":"2021-07-05 17:32:43","ChapterName":null},{"Chapter":"100320","Type":"Chapter","Page":"21","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100330","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100340","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100350","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100360","Type":"Chapter","Page":"20","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100370","Type":"Chapter","Page":"17","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100380","Type":"Chapter","Page":"21","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100390","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100400","Type":"Chapter","Page":"25","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100410","Type":"Chapter","Page":"23","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100420","Type":"Chapter","Page":"20","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100430","Type":"Chapter","Page":"18","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100440","Type":"Chapter","Page":"20","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100450","Type":"Chapter","Page":"18","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100460","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100470","Type":"Chapter","Page":"20","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100480","Type":"Chapter","Page":"19","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100490","Type":"Chapter","Page":"25","Directory":"","Date":"2021-08-26 16:57:25","ChapterName":null},{"Chapter":"100500","Type":"Chapter","Page":"22","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100510","Type":"Chapter","Page":"19","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100520","Type":"Chapter","Page":"19","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100530","Type":"Chapter","Page":"20","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100540","Type":"Chapter","Page":"17","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100550","Type":"Chapter","Page":"19","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100560","Type":"Chapter","Page":"20","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100570","Type":"Chapter","Page":"19","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100580","Type":"Chapter","Page":"24","Directory":"","Date":"2021-10-19 07:11:09","ChapterName":null},{"Chapter":"100590","Type":"Chapter","Page":"22","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100600","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100610","Type":"Chapter","Page":"19","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100620","Type":"Chapter","Page":"19","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100630","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100640","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100650","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100660","Type":"Chapter","Page":"21","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100670","Type":"Chapter","Page":"24","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100680","Type":"Chapter","Page":"23","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100690","Type":"Chapter","Page":"20","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100700","Type":"Chapter","Page":"19","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100710","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100720","Type":"Chapter","Page":"19","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100730","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100740","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100750","Type":"Chapter","Page":"18","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100760","Type":"Chapter","Page":"23","Directory":"","Date":"2021-11-22 06:15:55","ChapterName":null},{"Chapter":"100770","Type":"Chapter","Page":"21","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100780","Type":"Chapter","Page":"18","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100790","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100800","Type":"Chapter","Page":"18","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100810","Type":"Chapter","Page":"21","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100820","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100830","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100840","Type":"Chapter","Page":"23","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100850","Type":"Chapter","Page":"23","Directory":"","Date":"2022-01-31 01:44:54","ChapterName":null},{"Chapter":"100860","Type":"Chapter","Page":"23","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100870","Type":"Chapter","Page":"20","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100880","Type":"Chapter","Page":"20","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100890","Type":"Chapter","Page":"18","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100900","Type":"Chapter","Page":"20","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100910","Type":"Chapter","Page":"18","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100920","Type":"Chapter","Page":"20","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100930","Type":"Chapter","Page":"19","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100940","Type":"Chapter","Page":"25","Directory":"","Date":"2022-03-08 01:49:00","ChapterName":null},{"Chapter":"100950","Type":"Chapter","Page":"23","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"100960","Type":"Chapter","Page":"19","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"100970","Type":"Chapter","Page":"19","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"100980","Type":"Chapter","Page":"19","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"100990","Type":"Chapter","Page":"18","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"101000","Type":"Chapter","Page":"20","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"101010","Type":"Chapter","Page":"18","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"101020","Type":"Chapter","Page":"18","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"101030","Type":"Chapter","Page":"23","Directory":"","Date":"2022-04-20 19:18:07","ChapterName":null},{"Chapter":"101040","Type":"Chapter","Page":"24","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101050","Type":"Chapter","Page":"19","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101060","Type":"Chapter","Page":"19","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101070","Type":"Chapter","Page":"20","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101080","Type":"Chapter","Page":"20","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101090","Type":"Chapter","Page":"18","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101100","Type":"Chapter","Page":"19","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101110","Type":"Chapter","Page":"20","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101120","Type":"Chapter","Page":"23","Directory":"","Date":"2022-06-13 15:19:01","ChapterName":null},{"Chapter":"101130","Type":"Chapter","Page":"18","Directory":"","Date":"2021-01-06 06:30:38","ChapterName":null},{"Chapter":"101140","Type":"Chapter","Page":"20","Directory":"","Date":"2021-01-13 05:50:33","ChapterName":null},{"Chapter":"101150","Type":"Chapter","Page":"20","Directory":"","Date":"2021-01-20 14:51:01","ChapterName":null},{"Chapter":"101160","Type":"Chapter","Page":"21","Directory":"","Date":"2021-01-27 05:49:06","ChapterName":null},{"Chapter":"101170","Type":"Chapter","Page":"18","Directory":"","Date":"2021-02-03 05:19:44","ChapterName":null},{"Chapter":"101180","Type":"Chapter","Page":"21","Directory":"","Date":"2021-02-10 04:30:43","ChapterName":null},{"Chapter":"101190","Type":"Chapter","Page":"20","Directory":"","Date":"2021-02-17 07:11:58","ChapterName":null},{"Chapter":"101200","Type":"Chapter","Page":"18","Directory":"","Date":"2021-02-24 05:04:33","ChapterName":null},{"Chapter":"101210","Type":"Chapter","Page":"23","Directory":"","Date":"2021-03-03 03:59:11","ChapterName":null},{"Chapter":"101220","Type":"Chapter","Page":"20","Directory":"","Date":"2021-03-10 04:47:55","ChapterName":null},{"Chapter":"101230","Type":"Chapter","Page":"22","Directory":"","Date":"2021-03-17 03:30:05","ChapterName":null},{"Chapter":"101240","Type":"Chapter","Page":"20","Directory":"","Date":"2021-03-24 03:30:04","ChapterName":null},{"Chapter":"101250","Type":"Chapter","Page":"19","Directory":"","Date":"2021-03-31 05:19:50","ChapterName":null},{"Chapter":"101260","Type":"Chapter","Page":"19","Directory":"","Date":"2021-04-07 05:03:06","ChapterName":null},{"Chapter":"101270","Type":"Chapter","Page":"18","Directory":"","Date":"2021-04-14 03:55:31","ChapterName":null},{"Chapter":"101280","Type":"Chapter","Page":"20","Directory":"","Date":"2021-04-21 04:50:15","ChapterName":null},{"Chapter":"101290","Type":"Chapter","Page":"20","Directory":"","Date":"2021-04-28 12:22:03","ChapterName":null},{"Chapter":"101300","Type":"Chapter","Page":"21","Directory":"","Date":"2021-05-12 15:02:43","ChapterName":null},{"Chapter":"101310","Type":"Chapter","Page":"20","Directory":"","Date":"2021-05-19 03:23:42","ChapterName":null},{"Chapter":"101320","Type":"Chapter","Page":"19","Directory":"","Date":"2021-05-26 05:55:39","ChapterName":null},{"Chapter":"101330","Type":"Chapter","Page":"19","Directory":"","Date":"2021-06-02 09:03:25","ChapterName":null},{"Chapter":"101340","Type":"Chapter","Page":"20","Directory":"","Date":"2021-06-09 14:44:35","ChapterName":null},{"Chapter":"101350","Type":"Chapter","Page":"17","Directory":"","Date":"2021-06-16 08:16:22","ChapterName":null},{"Chapter":"101360","Type":"Chapter","Page":"19","Directory":"","Date":"2021-06-23 08:14:13","ChapterName":null},{"Chapter":"101370","Type":"Chapter","Page":"16","Directory":"","Date":"2021-06-29 21:50:20","ChapterName":null},{"Chapter":"101380","Type":"Chapter","Page":"20","Directory":"","Date":"2021-07-07 00:32:45","ChapterName":null},{"Chapter":"101390","Type":"Chapter","Page":"19","Directory":"","Date":"2021-07-21 02:49:50","ChapterName":null},{"Chapter":"101400","Type":"Chapter","Page":"21","Directory":"","Date":"2021-07-28 08:17:06","ChapterName":null},{"Chapter":"101410","Type":"Chapter","Page":"18","Directory":"","Date":"2021-08-04 00:25:48","ChapterName":null},{"Chapter":"101420","Type":"Chapter","Page":"20","Directory":"","Date":"2021-08-17 00:41:19","ChapterName":null},{"Chapter":"101430","Type":"Chapter","Page":"18","Directory":"","Date":"2021-08-24 23:14:15","ChapterName":null},{"Chapter":"101440","Type":"Chapter","Page":"19","Directory":"","Date":"2021-09-01 01:51:58","ChapterName":null},{"Chapter":"101450","Type":"Chapter","Page":"19","Directory":"","Date":"2021-09-07 22:32:36","ChapterName":null},{"Chapter":"101460","Type":"Chapter","Page":"17","Directory":"","Date":"2021-09-15 08:17:48","ChapterName":null},{"Chapter":"101470","Type":"Chapter","Page":"22","Directory":"","Date":"2021-09-21 18:51:21","ChapterName":null},{"Chapter":"101480","Type":"Chapter","Page":"19","Directory":"","Date":"2021-09-28 22:52:58","ChapterName":null},{"Chapter":"101490","Type":"Chapter","Page":"19","Directory":"","Date":"2021-10-28 15:46:03","ChapterName":null},{"Chapter":"101500","Type":"Chapter","Page":"21","Directory":"","Date":"2021-11-02 15:05:09","ChapterName":null},{"Chapter":"101510","Type":"Chapter","Page":"20","Directory":"","Date":"2021-11-10 03:04:52","ChapterName":null},{"Chapter":"101520","Type":"Chapter","Page":"19","Directory":"","Date":"2021-11-16 20:17:56","ChapterName":null},{"Chapter":"101530","Type":"Chapter","Page":"20","Directory":"","Date":"2021-11-24 14:20:36","ChapterName":null},{"Chapter":"101540","Type":"Chapter","Page":"19","Directory":"","Date":"2021-12-01 07:20:21","ChapterName":null},{"Chapter":"101550","Type":"Chapter","Page":"19","Directory":"","Date":"2021-12-11 07:00:30","ChapterName":null},{"Chapter":"101560","Type":"Chapter","Page":"18","Directory":"","Date":"2021-12-26 00:05:57","ChapterName":null},{"Chapter":"101570","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-05 06:29:05","ChapterName":null},{"Chapter":"101580","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-17 14:56:02","ChapterName":null},{"Chapter":"101590","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-20 14:41:58","ChapterName":null},{"Chapter":"101600","Type":"Chapter","Page":"19","Directory":"","Date":"2022-01-25 23:35:11","ChapterName":null},{"Chapter":"101610","Type":"Chapter","Page":"19","Directory":"","Date":"2022-02-02 23:54:17","ChapterName":null},{"Chapter":"101620","Type":"Chapter","Page":"17","Directory":"","Date":"2022-02-09 14:57:11","ChapterName":null},{"Chapter":"101630","Type":"Chapter","Page":"21","Directory":"","Date":"2022-02-23 04:49:13","ChapterName":null},{"Chapter":"101640","Type":"Chapter","Page":"21","Directory":"","Date":"2022-03-02 15:20:42","ChapterName":null},{"Chapter":"101650","Type":"Chapter","Page":"19","Directory":"","Date":"2022-03-10 14:51:59","ChapterName":null},{"Chapter":"101660","Type":"Chapter","Page":"20","Directory":"","Date":"2022-03-17 00:51:31","ChapterName":null},{"Chapter":"101670","Type":"Chapter","Page":"15","Directory":"","Date":"2022-03-22 16:59:12","ChapterName":null},{"Chapter":"101680","Type":"Chapter","Page":"19","Directory":"","Date":"2022-03-30 18:57:11","ChapterName":null},{"Chapter":"101690","Type":"Chapter","Page":"19","Directory":"","Date":"2022-04-06 23:27:58","ChapterName":null},{"Chapter":"101700","Type":"Chapter","Page":"21","Directory":"","Date":"2022-04-21 00:23:00","ChapterName":null},{"Chapter":"101710","Type":"Chapter","Page":"20","Directory":"","Date":"2022-04-28 15:41:53","ChapterName":null},{"Chapter":"101720","Type":"Chapter","Page":"20","Directory":"","Date":"2022-05-11 21:20:15","ChapterName":null},{"Chapter":"101730","Type":"Chapter","Page":"20","Directory":"","Date":"2022-05-19 15:31:55","ChapterName":null},{"Chapter":"101740","Type":"Chapter","Page":"18","Directory":"","Date":"2022-05-26 05:39:20","ChapterName":null},{"Chapter":"101750","Type":"Chapter","Page":"20","Directory":"","Date":"2022-06-01 22:30:08","ChapterName":null},{"Chapter":"101760","Type":"Chapter","Page":"18","Directory":"","Date":"2022-06-08 20:44:47","ChapterName":null},{"Chapter":"101770","Type":"Chapter","Page":"19","Directory":"","Date":"2022-06-17 04:21:12","ChapterName":null},{"Chapter":"101780","Type":"Chapter","Page":"18","Directory":"","Date":"2022-06-23 20:06:03","ChapterName":null},{"Chapter":"101790","Type":"Chapter","Page":"18","Directory":"","Date":"2022-06-29 20:00:49","ChapterName":null},{"Chapter":"101800","Type":"Chapter","Page":"20","Directory":"","Date":"2022-07-14 20:43:34","ChapterName":null},{"Chapter":"101810","Type":"Chapter","Page":"16","Directory":"","Date":"2022-07-19 20:35:29","ChapterName":null},{"Chapter":"101820","Type":"Chapter","Page":"20","Directory":"","Date":"2022-07-30 02:21:09","ChapterName":null},{"Chapter":"101830","Type":"Chapter","Page":"16","Directory":"","Date":"2022-08-12 02:06:26","ChapterName":null},{"Chapter":"101840","Type":"Chapter","Page":"18","Directory":"","Date":"2022-08-22 06:04:07","ChapterName":null},{"Chapter":"101850","Type":"Chapter","Page":"16","Directory":"","Date":"2022-08-26 14:34:06","ChapterName":null},{"Chapter":"101860","Type":"Chapter","Page":"25","Directory":"","Date":"2022-09-02 19:59:53","ChapterName":null},{"Chapter":"101870","Type":"Chapter","Page":"20","Directory":"","Date":"2022-09-09 03:05:02","ChapterName":null},{"Chapter":"101880","Type":"Chapter","Page":"20","Directory":"","Date":"2022-09-17 02:19:03","ChapterName":null},{"Chapter":"101890","Type":"Chapter","Page":"20","Directory":"","Date":"2022-09-24 00:06:52","ChapterName":null}];
+			vm.IndexName = "Blue-Lock";
+			vm.SeriesName = "Blue Lock";
+			vm.LoggedIn = false;
+			
+			vm.Edd = {
+				Active 		: false,
+				ImagePath 	: ""
+			};
+
+			if(window.location.hash == "#email") {
+				ga('send', 'event', {
+					'eventCategory'	: "Email Click",
+					'eventAction'	: "Blue Lock",
+					'eventLabel'	: "Chapter 189"
+				});
+			}
+
+			vm.Reported = false;
+			vm.Report = function(){
+				vm.Reported = true;
+				grecaptcha.execute('6Ld2-aMZAAAAAD9ESUQP8ijtHxtoWAwv2DOsJJ0n', {action:'report'}).then(function(token) {
+					vm.Captcha = token;
+					$http({
+						method: "POST",
+						url: "report.php",
+						data: {
+							"IndexName" : vm.IndexName,
+							"Chapter" 	: vm.CurChapter.Chapter,
+							"Captcha" 	: vm.Captcha
+						}
+					}).then(function(b) {}, function(b) {});
+				});
+			};
+	
+
+
+
+
+
+
+
+
+			vm.NonSticky = false;
+			if (typeof Cookies.get("NonSticky") !== 'undefined'){
+				vm.NonSticky = true;
+			}
+			vm.SetSticky = function(){
+				vm.NonSticky = !vm.NonSticky;
+				if(vm.NonSticky){
+					Cookies.set("NonSticky", "yes", { expires: 365 });
+				}else{
+					Cookies.remove("NonSticky");
+				}
+			};
+
+			vm.Preload = true;
+			if (typeof Cookies.get("Preload") !== 'undefined'){
+				vm.Preload = false;
+			}
+
+			vm.HasGap = true;
+			if (typeof Cookies.get("HasGap") !== 'undefined'){
+				vm.HasGap = false;
+			}
+
+			vm.ToggleGap = function(){
+				if(vm.HasGap){
+					vm.HasGap = false;
+					Cookies.set("HasGap", "nogap", { expires: 365 });
+				}else{
+					vm.HasGap = true;
+					Cookies.remove("HasGap");
+				}
+			};
+
+			vm.FullPageCookie = function(){
+				if(vm.CurPage == 0){
+					Cookies.set("FullPage", "yes", { expires: 365 });
+				}else{
+					Cookies.remove("FullPage");
+				}
+			};
+
+			vm.ChapterURLEncode = function(ChapterString){
+				Index = "";
+				var IndexString = ChapterString.substring(0, 1);
+				if(IndexString != 1){
+					Index = "-index-"+IndexString;
+				}
+
+				var Chapter = parseInt(ChapterString.slice(1,-1));
+
+				var Odd = "";
+				var OddString = ChapterString[ChapterString.length -1];
+				if(OddString != 0){
+					Odd = "." + OddString;
+				}
+
+				return "-chapter-" + Chapter  + Odd + Index;
+			};
+
+			vm.SaveHistory = function(){
+				var History = Cookies.get("History");
+				var Location = {
+					"IndexName" 	: vm.IndexName,
+					"SeriesName" 	: vm.SeriesName,
+					"Chapter" 		: vm.CurChapter.Chapter,
+					"Page" 			: vm.CurPage,
+					"TimeStamp"		: moment().unix()
+				};
+
+				if (typeof History === 'undefined'){
+					HistoryObj = [];
+					HistoryObj.push(Location);
+				}else{
+					HistoryObj = JSON.parse(decodeURIComponent(History));
+					Updated = false;
+					if(Array.isArray(HistoryObj)){
+						for(i=0; i < HistoryObj.length; i++){
+							if(HistoryObj[i].IndexName == Location.IndexName){
+								HistoryObj[i] = Location;
+								Updated = true;
+							}
+						}
+					}
+					if(!Updated){
+						HistoryObj.push(Location);
+					}
+				}
+				HistoryObj = HistoryObj.sort((a, b) => (b.TimeStamp > a.TimeStamp) ? 1 : -1);
+				HistoryObj = HistoryObj.slice(0,10);
+				Cookies.set("History", encodeURIComponent(JSON.stringify(HistoryObj)), { expires: 365 });
+			};
+
+
+			vm.RePage = function(){
+				vm.Pages = [];
+				for(i=1; i <= vm.CurChapter.Page; i++){
+					vm.Pages.push(i);
+				}
+			};
+			vm.RePage();
+
+			vm.FetchingPath = false;
+
+			vm.ScrollTop = function(){
+				var OffsetTop = 42;
+				if(vm.NonSticky){
+					OffsetTop = 0
+				}
+				$('html, body').animate({
+					scrollTop: $("#TopPage").offset().top - OffsetTop,
+				}, 100, 'linear' );
+			};
+
+			vm.ChapterDisplay = function(ChapterString){
+				var Chapter = parseInt(ChapterString.slice(1,-1));
+				var Odd = ChapterString[ChapterString.length -1];
+				if(Odd == 0){
+					return Chapter;
+				}else{
+					return Chapter + "." + Odd;
+				}
+			};
+
+			vm.SaveReadCookie = function(){
+				var URL_P0 = "/read-online/" + vm.IndexName + vm.ChapterURLEncode(vm.CurChapter.Chapter) + ".html";
+				history.replaceState({},"", URL_P0);
+				var URL_P1 = "/read-online/"+vm.IndexName + vm.ChapterURLEncode(vm.CurChapter.Chapter) + "-page-1.html";
+				history.replaceState({},"", URL_P1);
+			};
+
+			vm.UpdateURL = function(){
+				var URL 	= "/read-online/"+vm.IndexName;
+				var Chapter = vm.ChapterURLEncode(vm.CurChapter.Chapter);
+				var Page 	= "";
+				if(vm.CurPage > 0){
+					Page 	= "-page-" + vm.CurPage;
+				}
+				
+				//vm.SaveReadCookie();
+
+				URL = URL + Chapter + Page + ".html";
+				window.history.pushState(URL, 'Title', URL);
+				vm.SaveHistory();
+			};
+			vm.SaveHistory();
+
+			vm.FetchPath = function(Chapter, Page){
+				vm.Reported = false;
+				vm.FetchingPath = true;
+				vm.Pages = [];
+				vm.ScrollTop();
+
+				$http({
+					method: "POST",
+					url: "fetch.php",
+					data: {
+						"IndexName" : vm.IndexName,
+						"Chapter" 	: Chapter.Chapter
+					}
+				}).then(function(b) {
+					vm.FetchingPath = false;
+					if(b.data.success){
+						ga('send', 'event', {
+							'eventCategory'	: "Reading",
+							'eventAction'	: vm.SeriesName,
+							'eventLabel'	: "Chapter " + vm.ChapterDisplay(Chapter.Chapter)
+						});
+
+						$timeout(function() {
+							vm.CurPathName = b.data.val.PathName;
+							vm.Edd = b.data.val.Edd;
+							
+							vm.CurChapter = Chapter;
+							vm.CurPage = Page;
+							vm.RePage();
+
+							vm.UpdateURL();
+							vm.CheckBookmark();
+						}, 100);
+					}else{
+						alert(b.data.val);
+					}
+				}, function(b) {
+					alert("Network Error: Please try again later.");
+					vm.FetchingPath = false;
+				});
+			};
+
+			vm.Previous = function(){
+				vm.ScrollTop();
+				if(!vm.FetchingPath){
+					if(vm.CurPage == 0){
+						if(vm.CurChapter.Chapter == vm.CHAPTERS[0].Chapter){
+							//Do Nothing
+							//alert("FIRST");
+						}else{
+							var IsPrev = false;
+							for(i = (vm.CHAPTERS.length - 1); i >= 0; i--){
+								if(IsPrev){
+									vm.PreviousChapter = vm.CHAPTERS[i];
+									break;
+								}
+								if(vm.CHAPTERS[i].Chapter == vm.CurChapter.Chapter){
+									IsPrev = true;
+								}
+							}
+							vm.FetchPath(vm.PreviousChapter, 0);
+						}
+					}else{
+						if(vm.CurPage == 1 && vm.CurChapter.Chapter == vm.CHAPTERS[0].Chapter){
+							//Do Nothing
+							//alert("FIRST");
+						}else{
+							if(vm.CurPage == 1){
+								// Previous Chapter
+								var IsPrev = false;
+								for(i = (vm.CHAPTERS.length - 1); i >= 0; i--){
+									if(IsPrev){
+										vm.PreviousChapter = vm.CHAPTERS[i];
+										vm.PreviousPage = vm.PreviousChapter.Page;
+										break;
+									}
+									if(vm.CHAPTERS[i].Chapter == vm.CurChapter.Chapter){
+										IsPrev = true;
+									}
+								}
+								vm.FetchPath(vm.PreviousChapter, vm.PreviousPage);
+							}else{
+								vm.CurPage--;
+								vm.UpdateURL();
+								vm.CheckBookmark();
+							}
+						}
+					}
+				}else{
+					alert("Please Wait...");
+				}
+			};
+
+			vm.Next = function(){
+				vm.ScrollTop();
+				if(!vm.FetchingPath){
+					if(vm.CurPage == 0){
+						if(vm.CurChapter.Chapter == vm.CHAPTERS[vm.CHAPTERS.length - 1].Chapter){
+							window.location.href = "/manga/"+vm.IndexName+"#unavailable";
+						}else{
+							var IsNext = false;
+							for(i=0; i < vm.CHAPTERS.length; i++){
+								if(IsNext){
+									vm.NextChapter = vm.CHAPTERS[i];
+									break;
+								}
+								if(vm.CHAPTERS[i].Chapter == vm.CurChapter.Chapter){
+									IsNext = true;
+								}
+							}
+							vm.FetchPath(vm.NextChapter, 0);
+						}
+					}else{
+						if(vm.CurPage == vm.CurChapter.Page && vm.CurChapter.Chapter == vm.CHAPTERS[vm.CHAPTERS.length - 1].Chapter){
+							window.location.href = "/manga/"+vm.IndexName+"#unavailable";
+						}else{
+							if(vm.CurPage == vm.CurChapter.Page){
+								// Next Chapter
+								var IsNext = false;
+								for(i=0; i < vm.CHAPTERS.length; i++){
+									if(IsNext){
+										vm.NextChapter = vm.CHAPTERS[i];
+										vm.NextPage = 1;
+										break;
+									}
+									if(vm.CHAPTERS[i].Chapter == vm.CurChapter.Chapter){
+										IsNext = true;
+									}
+								}
+								vm.FetchPath(vm.NextChapter, vm.NextPage);
+							}else{
+								vm.CurPage++;
+								vm.UpdateURL();
+								vm.CheckBookmark();
+							}
+						}
+					}
+				}else{
+					alert("Please Wait...");
+				}
+			};
+
+			vm.GlobalKey = function(Key){
+				if(Key == 37){
+					vm.Previous();
+				}else if(Key == 39){
+					vm.Next();
+				}
+			};
+
+			vm.GoToChapter = function(Chapter){
+				Page = 0;
+				if(vm.CurPage != 0){
+					Page = 1;
+				}
+				vm.FetchPath(Chapter, Page);
+				$("#ChapterModal").modal("hide");
+			};
+			vm.GoToPage = function(Page){
+				if(Page > 0 && Page <= vm.CurChapter.Page){
+					vm.CurPage = Page;
+					vm.UpdateURL();
+					vm.CheckBookmark();
+					$("#PageModal").modal("hide");
+				}
+			};
+			
+			vm.CheckCordinate = function(event){
+				Ratio = event.clientX / screen.width * 100;
+				if(Ratio < 25){
+					vm.Previous();
+				}else{
+					vm.Next();
+				}
+			};
+			
+			vm.ScrollScreenDown = function(){
+				var Ratio = event.clientX / screen.width * 100;
+				var ScreenHeight = document.documentElement.clientHeight * 0.9;
+				
+				if(Ratio < 25){
+					$('html, body').animate({scrollTop: "-="+ScreenHeight+"px"}, 300);
+				}else{
+					if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+						//vm.Next();
+					}else{
+						$('html, body').animate({scrollTop: "+="+ScreenHeight+"px"}, 300);
+					}
+				}
+			};
+			
+			vm.ChapterImage = function(ChapterString){
+				var Chapter = ChapterString.slice(1,-1);
+				var Odd = ChapterString[ChapterString.length -1];
+				if(Odd == 0){
+					return Chapter;
+				}else{
+					return Chapter + "." + Odd;
+				}
+			};
+			vm.PageImage = function(PageString){
+				var s = "000" + PageString;
+				return s.substr(s.length - 3);
+			}
+
+			vm.Bookmarked = false;
+			vm.CheckBookmark = function(){
+				if(vm.LoggedIn){
+					$http({
+						method: "POST",
+						url: "bookmark.check.php",
+						data: {
+							"IndexName"	: vm.IndexName,
+							"Chapter" 	: vm.CurChapter.Chapter,
+							"Page" 		: vm.CurPage
+						}
+					}).then(function(b) {
+						if(b.data.success){
+							vm.Bookmarked = b.data.val;
+						}
+					}, function(b) {
+					});
+				}
+			};
+			vm.CheckBookmark();
+
+			vm.Bookmarking = false;
+			vm.Bookmark = function(){
+				if(vm.LoggedIn){
+					vm.Bookmarking = true;
+					$http({
+						method: "POST",
+						url: "bookmark.php",
+						data: {
+							"IndexName"	: vm.IndexName,
+							"Chapter" 	: vm.CurChapter.Chapter,
+							"Page" 		: vm.CurPage
+						}
+					}).then(function(b) {
+						if(b.data.success){
+							vm.Bookmarked = b.data.val;
+						}else{
+							alert(b.data.val);
+						}
+						vm.Bookmarking = false;
+					}, function(b) {
+						alert("Network Error: Please try again later.");
+						vm.Bookmarking = false;
+					});
+				}else{
+					$("#AuthModal").modal("show");
+				}
+			};
+
+
+		};
+		app.controller("MainCtrl", MainFunction);
+	</script>
+
+</body>
+</html>
