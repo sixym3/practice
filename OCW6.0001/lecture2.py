@@ -25,3 +25,5 @@ print(text * 3)
 
 num = int(input("type a number"))
 print(num ** 2)
+
+# Anything that is indented is called a code block, or four spaces of indentation
