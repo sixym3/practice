@@ -20,4 +20,19 @@ def quo_rem(x, y):
 
 # (quo, rem) = (rem, quo)
 
-print(quo, rem) 
+
+def remove_dups_bad(L1, L2):
+    for e in L1:
+        if e in L2:
+            L1.remove(e)
+            
+def remove_dups(L1, L2):
+    L1_copy = L1[:]
+    for e in L1_copy:
+        if e in L2:
+            L1.remove(e)
+            
+L1 = [1, 2, 3, 5]
+L2 = [1, 2, 3, 5]
+remove_dups(L1, L2)
+print(L1, L2)
