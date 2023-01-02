@@ -81,7 +81,17 @@ def fib(n):
     if n == 0 or n == 1:
         return 1
     else:
-        return fib(n-1) + fib(n-2)
+        return fib(n - 1) + fib(n - 2)
+
+def fib_dic(n, d):
+    if n in d:
+        return d[n]
+    else:
+        ans = fib_dic(n - 1, d) + fib_dic(n - 2, d)
+        d[n] = ans
+        return ans
+    
+d = {1: 1, 2: 1}
     
 def pali(inputstr):
     n = len(inputstr)
@@ -145,7 +155,8 @@ But then, one day, everything changed
 You're all I need
 Underneath the tree
 """.split(" ")
-print(get_most_used_word(lyrics_to_dict(song)))
+
+# print(get_most_used_word(lyrics_to_dict(song)))
     
     
 #towers(4, "A", "B", "C")
@@ -154,6 +165,10 @@ print(fib(6))
 for i in range(10):
     print(fib(i))
 """
-print(isPalidrome("Are	we	not	drawn	onward,	we	few,	drawn	onward	to	new	era?"))
+# print(isPalidrome("Are	we	not	drawn	onward,	we	few,	drawn	onward	to	new	era?"))
+for i in range(1, 11):
+    print(d)
+    
+    print(fib_dic(i, d))
 
 #print(factorial_iter(3))
