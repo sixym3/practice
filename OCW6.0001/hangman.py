@@ -82,7 +82,7 @@ def get_guessed_word(secret_word, letters_guessed):
         if char in letters_guessed:
             result += char
         else:
-            result += "_"
+            result += "_ "
     return result
 
 
@@ -94,14 +94,14 @@ def get_available_letters(letters_guessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    result = "abcdefghijlkmnopqrstuvwxyz"
+    result = string.ascii_lowercase
     for char in letters_guessed:
         if char in result:
             result = result.replace(char, "")
     return result
 
 
-def get_user_input(letters_guessed, valid_inputs = "abcdefghijlkmnopqrstuvwxyz"):
+def get_user_input(letters_guessed, valid_inputs = string.ascii_lowercase):
     try:
         time.sleep(0.5)
         res = input("What is your guess?").lower()
@@ -153,6 +153,8 @@ def hangman(secret_word):
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     i = 0
     letters_guessed = []
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is", len(secret_word), "letters long.")
     
     while i < 6 and not is_word_guessed(secret_word, letters_guessed):
         print(get_guessed_word(secret_word, letters_guessed))
