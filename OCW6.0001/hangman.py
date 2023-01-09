@@ -191,19 +191,17 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    uniqueletters = {}
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    my_word = my_word.replace("_ ", "_")
-    if len(my_word) != len(other_word):
+    revealed = set()
+    
+    if len(my_word.replace("_ ", "_")) != len(other_word):
         return False
-
-    for i in range(len(my_word)):
-        if my_word[i] != "_":
-            if my_word[i] != other_word[i]:
-                return False 
-        else: # my_word[i] == "_"
-            pass
-    return True
+    
+    for char in my_word:
+        revealed.add(char)
+        
+    expected = get_guessed_word(other_word, list(revealed))
+    
+    return expected == my_word
 
 
 
@@ -217,8 +215,14 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    result = []
+    for word in wordlist:
+        if match_with_gaps(my_word, word):
+            result.append(word)
+    if len(result):
+        print(result)
+    else:
+        print("No matches found")
 
 
 
@@ -249,8 +253,53 @@ def hangman_with_hints(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    i = 0
+    warnings = 3
+    letters_guessed = []
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is", len(secret_word), "letters long.")
+    
+    while i < 6 and not is_word_guessed(secret_word, letters_guessed):
+        print(get_guessed_word(secret_word, letters_guessed))
+        print("Available letters:", get_available_letters(letters_guessed))
+        valid = False
+        while not valid:
+            try:
+                time.sleep(0.5)
+                guess = input("Enter a character").lower()
+                if guess in "abcdefghijlkmnopqrstuvwxyz*" and guess not in letters_guessed:
+                    valid = True
+                    break
+                else:
+                    if warnings >= 1:
+                        warnings -= 1
+                        if guess in letters_guessed:
+                            print("Oops! You've already guessed that letter. You now have", warnings, "warnings:")
+                        else:
+                            print("Oops! That is not a valid letter. You have", warnings, "warnings left:")
+                    else:
+                        i += 1      
+                        print("You have lost one tries, you now have", 6 - i, "tries left")
+                        if i >= 6:
+                            break
+            except Exception as e:
+                print(e)
+        if guess != "*":
+            letters_guessed.append(guess)
+            if guess not in secret_word:
+                i += 1
+                if guess in "aeiou":
+                    i += 1
+        else:
+            show_possible_matches(get_guessed_word(secret_word, letters_guessed))
+            continue
+        print_divider()
+        print("You have guessed", guess)
+        print("You have", str(6 - i)+ "/6 guesses left")
+    if is_word_guessed(secret_word, letters_guessed):
+        print("You won! Congrats")
+    else:
+        print("Sorry, better luck next time, your word was:", secret_word)
 
 
 
@@ -266,13 +315,13 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    # secret_word = choose_word(wordlist)
+    # hangman(secret_word)
 
 ###############
     
     # To test part 3 re-comment out the above lines and 
     # uncomment the following two lines. 
     
-    #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
