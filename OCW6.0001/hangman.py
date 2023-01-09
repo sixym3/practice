@@ -191,8 +191,19 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
+    uniqueletters = {}
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    my_word = my_word.replace("_ ", "_")
+    if len(my_word) != len(other_word):
+        return False
+
+    for i in range(len(my_word)):
+        if my_word[i] != "_":
+            if my_word[i] != other_word[i]:
+                return False 
+        else: # my_word[i] == "_"
+            pass
+    return True
 
 
 
