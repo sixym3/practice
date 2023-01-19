@@ -16,7 +16,7 @@ CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10, '*': 0
 }
 
 # -----------------------------------
@@ -143,15 +143,16 @@ def deal_hand(n):
     """
     
     hand={}
-    num_vowels = int(math.ceil(n / 3))
+    num_vowels = int(math.ceil(n / 3)) - 1
 
     for i in range(num_vowels):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
-    
-    for i in range(num_vowels, n):    
+        
+    for i in range(num_vowels, n - 1):    
         x = random.choice(CONSONANTS)
         hand[x] = hand.get(x, 0) + 1
+    hand["*"] = 1
     
     return hand
 
@@ -197,17 +198,31 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    words = []
     word = word.lower()
-    if not word in word_list:
-        return False
-    hand_copy = hand.copy()
-    for char in word:
-        amount = hand_copy.get(char, 0)
-        hand_copy[char] = amount - 1
-    for x in hand_copy.values():
-        if x < 0:
-            return False
-    return True
+    if word.find("*") != -1:
+        for VOWEL in VOWELS:
+            words += word.replace("*", VOWEL)
+    else:
+        words += word
+    
+    exists = False
+    for w in words:
+        if w in word_list:
+            exists = True
+            break
+       
+    
+    for w in words:
+        hand_copy = hand.copy()
+        for char in w:
+            amount = hand_copy.get(char, 0)
+            hand_copy[char] = amount - 1
+        for x in hand_copy.values():
+            if x < 0:
+                return False
+            
+        return True and exists
 
 #
 # Problem #5: Playing a hand
