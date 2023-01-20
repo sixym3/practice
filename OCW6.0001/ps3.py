@@ -198,31 +198,34 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
-    words = []
+    possible_words = []
     word = word.lower()
+    valid_word_exists = False
     if word.find("*") != -1:
         for VOWEL in VOWELS:
-            words += word.replace("*", VOWEL)
+            x = word.replace("*", VOWEL)
+            if x in word_list:
+                valid_word_exists = True
     else:
-        words += word
+        valid_word_exists = True
     
-    exists = False
-    for w in words:
-        if w in word_list:
-            exists = True
-            break
-       
+    hand_copy = hand.copy()
+    for char in word:
+        amount = hand_copy.get(char, 0)
+        hand_copy[char] = amount - 1
+    if is_valid_hand(hand_copy):
+        return True and valid_word_exists
+    return False
+        
+def is_valid_hand(hand):
+    for i in hand.values():
+        if i < 0:
+            return False
+    return True
     
-    for w in words:
-        hand_copy = hand.copy()
-        for char in w:
-            amount = hand_copy.get(char, 0)
-            hand_copy[char] = amount - 1
-        for x in hand_copy.values():
-            if x < 0:
-                return False
-            
-        return True and exists
+        
+        
+    
 
 #
 # Problem #5: Playing a hand
