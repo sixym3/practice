@@ -10,6 +10,7 @@
 import math
 import random
 import string
+import time
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
@@ -217,6 +218,7 @@ def is_valid_word(word, hand, word_list):
         return True and valid_word_exists
     return False
         
+
 def is_valid_hand(hand):
     for i in hand.values():
         if i < 0:
@@ -224,9 +226,6 @@ def is_valid_hand(hand):
     return True
     
         
-        
-    
-
 #
 # Problem #5: Playing a hand
 #
@@ -237,8 +236,16 @@ def calculate_handlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    return sum(hand.values())
+
+
+def stringify_hand(hand):
+    result = ""
+    for i in hand.keys():
+        for j in range(hand[i]):
+            result += i
+            result += " "
+    return result
 
 def play_hand(hand, word_list):
 
@@ -270,8 +277,28 @@ def play_hand(hand, word_list):
       returns: the total score for the hand
       
     """
+    user_quit = False
+    score = 0
     
-    # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
+    while calculate_handlen(hand) > 0:
+        print("​Current Hand:", stringify_hand(hand))
+        round_input = input("Enter word, or \"!!\" to indicate that you are finished:").strip()
+        time.sleep(0.5)
+        if round_input == "!!":
+            user_quit = True
+            break
+        if is_valid_word(round_input, hand, word_list):
+            round_score = get_word_score(round_input, calculate_handlen(hand))
+            score += round_score
+            print(repr(round_input), "earned", round_score, "points. Total:", score, "points")
+        else:
+            print("That is not a valid word. Please choose another word.")
+        hand = update_hand(hand, round_input)
+        print()
+    if not user_quit:
+        print("Ran out of letters.", sep=" ")
+    print("Total score:", score, "points")
+    return score
     # Keep track of the total score
     
     # As long as there are still letters left in the hand:
@@ -337,7 +364,14 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     
-    pass  # TO DO... Remove this line when you implement this function
+    result = hand.copy()
+    amount = hand.get(letter, 0)
+    possible_choices = set([c for c in CONSONANTS+VOWELS]) - set(hand)
+    new_letter = random.choice(tuple(possible_choices))
+    result.pop(letter)
+    result.update({new_letter: amount})
+    print(result)
+    return result
        
     
 def play_game(word_list):
@@ -370,9 +404,27 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
-    
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
-    
+    score = 0
+    rounds = int(input("Enter total number of hands:"))
+    time.sleep(0.5)
+    for i in range(rounds):
+        hand = deal_hand(HAND_SIZE)
+        print("​Current Hand:", stringify_hand(hand))
+        if input("Would you like to substitute a letter?") == "yes":
+            time.sleep(0.5)
+            letter = input("Which letter would you like to replace:")
+            time.sleep(0.5)
+            if letter in hand.keys():
+                hand = substitute_hand(hand, letter)
+            else:
+                print("That is not one of the choices.")
+        round_score = play_hand(hand, word_list)
+        if input("Would you like to replay the hand?") == "yes":
+            time.sleep(0.5)
+            round_score = play_hand(hand, word_list)
+        score += round_score
+        print("------")
+    print("Total score over all hands:", score)
 
 
 #
